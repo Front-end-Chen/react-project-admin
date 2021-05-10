@@ -1,0 +1,47 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+body #root,
+html #root {
+  width: 100%;
+  height: 100%;
+}
+.login {
+  width: 100%;
+  height: 100%;
+  background: url('../imgs/bg.jpg') no-repeat;
+  background-size: cover;
+}
+.login header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  background-color: rgba(21, 20, 13, 0.5);
+  padding-left: 10px;
+}
+.login header img {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+}
+.login header h1 {
+  margin-left: 10px;
+  color: white;
+  font-size: 30px;
+}
+.login section {
+  width: 400px;
+  height: 300px;
+  padding: 30px;
+  margin: 0 auto;
+  margin-top: 180px;
+  background-color: white;
+}
+.login section h1 {
+  font-size: 25px;
+  text-align: center;
+}
+/*# sourceMappingURL=./login.css.map */
