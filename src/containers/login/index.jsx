@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { Form, Input, Button, Message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios'
+import { saveUserInfo } from '../../redux/actions/login.js'
 import './css/login.less'
 import logo from './imgs/logo.png'
 
 //antdv4写法
-export default class Login extends Component {
+class Login extends Component {
 
     //点击登录按钮的成功的回调
     onFinish = (values) => {
         console.log(values);
+        // alert('向服务器发送登录请求');
+        // this.props.saveUserInfo('向服务器发送登录请求')
         alert('向服务器发送登录请求');
     };
 
@@ -17,7 +22,7 @@ export default class Login extends Component {
     onFinishFailed = ({ values, errorFields, outOfDate }) => {
         Message.error('表单输入有误，请检查！')
     };
-    
+
     //自定义校验，即：自己写判断 -> 密码的验证器---每当在密码输入框输入东西后，都会调用此函数去验证输入是否合法。
     pwdValidator = (rule, value) => {
         if (!value) {
@@ -96,3 +101,11 @@ export default class Login extends Component {
         )
     }
 }
+
+//从redux中获取状态和操作状态的方法
+export default connect(
+    state => ({ userInfo: state.userInfo }),
+    {
+        saveUserInfo
+    }
+)(Login)

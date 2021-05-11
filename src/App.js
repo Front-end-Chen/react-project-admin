@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Admin from './pages/admin'
-import Login from './pages/login'
+import Admin from './containers/admin'
+import Login from './containers/login'
 
 export default class App extends Component {
   render() {
