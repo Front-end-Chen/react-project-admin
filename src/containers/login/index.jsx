@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Form, Input, Button, Message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import axios from 'axios'
 import { saveUserInfo } from '../../redux/actions/login.js'
+import { reqLogin } from '../../api';
 import './css/login.less'
 import logo from './imgs/logo.png'
 
@@ -11,16 +12,33 @@ import logo from './imgs/logo.png'
 class Login extends Component {
 
     //点击登录按钮的成功的回调
-    onFinish = (values) => {
-        console.log(values);
+    onFinish = async(values) => {
+        // console.log(values); {username:xxx,password:xxx}
         // alert('向服务器发送登录请求');
         // this.props.saveUserInfo('向服务器发送登录请求')
-        alert('向服务器发送登录请求');
+
+        //获取用户输入
+        const { username, password } = values
+        //不要将发ajax请求的代码写组件里，不便于维护！
+        //使用async、await与拦截器简化处理请求成功失败的代码(代替手动.then和.catch)
+        //若用户输入无错误，发送登录请求
+        const result = await reqLogin(username, password)
+        //从响应中获取：请求状态、错误信息、数据
+        const { status, msg, data } = result
+        if (status === 0) {
+            //1.服务器返回的user信息，还有token交由redux管理
+            this.props.saveUserInfo(data)
+            //2.跳转admin页面
+            this.props.history.replace('/admin')
+            //注：此处必须先保存数据再跳转，不然admin页面获取不到数据
+        } else {
+            Message.warning(msg,2)
+        }
     };
 
     //点击登录按钮的失败的回调
     onFinishFailed = ({ values, errorFields, outOfDate }) => {
-        Message.error('表单输入有误，请检查！')
+        Message.error('表单输入有误，请检查！',2)
     };
 
     //自定义校验，即：自己写判断 -> 密码的验证器---每当在密码输入框输入东西后，都会调用此函数去验证输入是否合法。
@@ -38,6 +56,12 @@ class Login extends Component {
     }
 
     render() {
+        //从redux中获取用户的登录状态
+        const {isLogin} = this.props
+        //如果已经登录了，重定向到admin页面
+        if (isLogin) {
+            return <Redirect to='/admin'/>
+        }
         return (
             <div className='login'>
                 <header>
@@ -104,8 +128,6 @@ class Login extends Component {
 
 //从redux中获取状态和操作状态的方法
 export default connect(
-    state => ({ userInfo: state.userInfo }),
-    {
-        saveUserInfo
-    }
+    state => ({isLogin: state.userInfo.isLogin}),
+    {saveUserInfo}
 )(Login)
