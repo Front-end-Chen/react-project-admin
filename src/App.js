@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import { Route, Switch } from 'react-router-dom'
-import Admin from './containers/admin'
-import Login from './containers/login'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import Admin from './containers/Admin'
+import Login from './containers/Login'
 
 export default class App extends Component {
   render() {
@@ -10,6 +10,8 @@ export default class App extends Component {
         <Switch>
           <Route path='/login' component={Login}/>
           <Route path='/admin' component={Admin}/>
+          {/* 默认跳转admin */}
+          <Redirect to='/admin'/>
         </Switch>
       </Fragment>
     )

@@ -1,0 +1,47 @@
+.header {
+  background-color: #fff;
+}
+.header .header-top {
+  height: 50px;
+  padding-right: 5px;
+  text-align: right;
+  line-height: 50px;
+  border-bottom: 1px solid #1DA57A;
+}
+.header .header-top .username {
+  margin-left: 15px;
+}
+.header .header-bottom {
+  display: flex;
+  height: 50px;
+  line-height: 50px;
+  padding-right: 22px;
+}
+.header .header-bottom .header-bottom-left {
+  position: relative;
+  width: 25%;
+  font-size: 20px;
+  text-align: center;
+}
+.header .header-bottom .header-bottom-left::after {
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  transform: translateX(-50%);
+  content: '';
+  border-top: 20px solid white;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
+.header .header-bottom .header-bottom-right {
+  width: 75%;
+  text-align: right;
+}
+.header .header-bottom .header-bottom-right img {
+  width: 30px;
+  height: 20px;
+  margin: 0px 10px;
+  vertical-align: text-top;
+}
+/*# sourceMappingURL=./header.css.map */

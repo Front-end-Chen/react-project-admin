@@ -1,6 +1,8 @@
 import axios from "axios";
-import {Message} from 'antd'
 import qs from 'querystring'
+import store from '../redux/store'
+import {deleteUserInfo} from '../redux/actions/login'
+import {Message} from 'antd'
 import NProgress from 'nprogress' //引入显示进度条的库
 import 'nprogress/nprogress.css'
 
@@ -14,6 +16,10 @@ instance.interceptors.request.use((config) => {
     // console.log(config);
     //进度条开始
     NProgress.start()
+    //从redux中获取之前所保存的token
+    const {token} = store.getState().userInfo
+    //向请求头中添加token，用于校验身份
+    if(token) config.headers.Authorization = 'atguigu_' + token
     //从配置对象中获取method和data
     const {method,data} = config
     if (method.toLowerCase() === 'post') {
@@ -36,8 +42,15 @@ instance.interceptors.response.use(
     (error) => {
         //进度条结束
         NProgress.done()
-        //请求若失败，提示错误（这里可以处理所有请求的异常）
-        Message.error(error.message,2)
+        // debugger;
+        if (error.response.status === 401) {
+            Message.error('身份校验失败，请重新登录！',2)
+            //分发一个删除用户信息的action
+            store.dispatch(deleteUserInfo())
+        } else {
+            //请求若失败，提示错误（这里可以处理所有请求的异常）
+            Message.error(error.message,2)
+        }
         //中断Promise链
         return new Promise(()=>{})
     }

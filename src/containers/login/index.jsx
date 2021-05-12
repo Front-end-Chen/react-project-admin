@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { saveUserInfo } from '../../redux/actions/login.js'
 import { Form, Input, Button, Message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { saveUserInfo } from '../../redux/actions/login.js'
 import { reqLogin } from '../../api';
 import './css/login.less'
 import logo from './imgs/logo.png'
 
+//2.装饰器写法
+@connect(
+    state => ({isLogin: state.userInfo.isLogin}),
+    {saveUserInfo}
+)
 //antdv4写法
 class Login extends Component {
 
@@ -126,8 +131,11 @@ class Login extends Component {
     }
 }
 
+export default Login;
+
+//1.常规写法
 //从redux中获取状态和操作状态的方法
-export default connect(
-    state => ({isLogin: state.userInfo.isLogin}),
-    {saveUserInfo}
-)(Login)
+// export default connect(
+//     state => ({isLogin: state.userInfo.isLogin}),
+//     {saveUserInfo}
+// )(Login)
