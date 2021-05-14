@@ -7,3 +7,5 @@
 
 // export const BASE_URL = "http://localhost:3000";
 export const BASE_URL = ""; //等于上面的写法
+//表格每页展示的条数
+export const PAGE_SIZE = 7

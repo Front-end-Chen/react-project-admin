@@ -6,7 +6,7 @@ import { Form, Input, Button, Message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { reqLogin } from '../../api';
 import './css/login.less'
-import logo from './imgs/logo.png'
+import logo from '../../static/imgs/logo.png'
 
 //2.装饰器写法
 @connect(
@@ -17,6 +17,7 @@ import logo from './imgs/logo.png'
 class Login extends Component {
 
     //点击登录按钮的成功的回调
+    //新版本自动触发表单验证validateFields
     onFinish = async(values) => {
         // console.log(values); {username:xxx,password:xxx}
         // alert('向服务器发送登录请求');
@@ -34,7 +35,7 @@ class Login extends Component {
             //1.服务器返回的user信息，还有token交由redux管理
             this.props.saveUserInfo(data)
             //2.跳转admin页面
-            this.props.history.replace('/admin')
+            this.props.history.replace('/admin/home')
             //注：此处必须先保存数据再跳转，不然admin页面获取不到数据
         } else {
             Message.warning(msg,2)
@@ -65,7 +66,7 @@ class Login extends Component {
         const {isLogin} = this.props
         //如果已经登录了，重定向到admin页面
         if (isLogin) {
-            return <Redirect to='/admin'/>
+            return <Redirect to='/admin/home'/>
         }
         return (
             <div className='login'>

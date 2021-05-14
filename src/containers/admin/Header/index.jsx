@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { deleteUserInfo } from '../../../redux/actions/login'
 import screen from 'screenfull'
 import dayjs from 'dayjs'
-import { Button, Modal} from 'antd';
+import { Button, Modal } from 'antd';
 import { FullscreenOutlined, FullscreenExitOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import './css/header.less'
+import menuList from '../../../config/menu_config'
+
 const { confirm } = Modal;
 
 @connect(
-    state => ({userInfo: state.userInfo}),
-    {deleteUserInfo}
+    state => ({ 
+        userInfo: state.userInfo,
+        title: state.title
+     }),
+    { deleteUserInfo }
 )
 //在非路由组件中，要使用路由组件的api，借助withRouter实现
 @withRouter
@@ -20,22 +25,25 @@ class Header extends Component {
     state = {
         isFull: false,
         date: dayjs().format('YYYY年 MM月DD日 HH:mm:ss'),
-        weatherInfo: {}
+        weatherInfo: {},
+        title: ''
     }
 
     componentDidMount = () => {
         //给screenfull绑定监听
-        screen.on('change',() => {
+        screen.on('change', () => {
             let isFull = !this.state.isFull
-            this.setState({isFull})
+            this.setState({ isFull })
         })
         //更新时间
         this.timeID = setInterval(() => {
-            this.setState({date: dayjs().format('YYYY年 MM月DD日 HH:mm:ss')})
+            this.setState({ date: dayjs().format('YYYY年 MM月DD日 HH:mm:ss') })
         })
+        //展示当前菜单名称
+        this.getTitle()
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         //清除更新时间定时器
         clearInterval(this.timeID)
     }
@@ -47,23 +55,39 @@ class Header extends Component {
 
     //退出登录的回调
     logout = () => {
-        const {deleteUserInfo} = this.props
+        const { deleteUserInfo } = this.props
         confirm({
             icon: <ExclamationCircleOutlined />,
             title: '确定退出？',
             content: '若退出需要重新登录',
-            cancelText:'取消',
-            okText:'确认',
+            cancelText: '取消',
+            okText: '确认',
             onOk() {
-              //触发redux删除所保存的用户信息
-              deleteUserInfo()
+                //触发redux删除所保存的用户信息
+                deleteUserInfo()
             }
-          });
+        });
+    }
+
+    getTitle = () => {
+        let pathKey = this.props.location.pathname.split('/').reverse()[0]
+        let title = ''
+        menuList.forEach(item => {
+            if (item.children && item.children instanceof Array) {
+                let tmp = item.children.find(citem => {
+                    return citem.key === pathKey
+                })
+                if (tmp) title = tmp.title
+            } else {
+                if(item.key === pathKey) title = item.title
+            }
+        });
+        this.setState({title})
     }
 
     render() {
-        const {isFull, date} = this.state
-        const {user} = this.props.userInfo
+        const { isFull, date } = this.state
+        const { user } = this.props.userInfo
         return (
             <header className="header">
                 <div className="header-top">
@@ -75,11 +99,22 @@ class Header extends Component {
                 </div>
                 <div className="header-bottom">
                     <div className="header-bottom-left">
-                        {this.props.location.pathname}
+                        {/* 此处直接调用方法匹配名称会有性能问题，每次render就会去匹配名称，由于有时间显示一直在调用render导致！ */}
+                        {/* {this.getTitle()} */}
+
+                        {/* 使用redux保存menu的title，解决性能问题 */}
+                        {/* {this.props.title} */}
+
+                        {/* 
+                            最终版：
+                            1.使用redux保存menu的title，解决性能问题
+                            2.再结合state保存的title，解决刷新丢失问题 
+                        */}
+                        {this.props.title || this.state.title}
                     </div>
                     <div className="header-bottom-right">
                         {date}
-                        <img src="http://api.map.baidu.com/images/weather/day/qing.png" alt="天气信息"/>
+                        <img src="http://api.map.baidu.com/images/weather/day/qing.png" alt="天气信息" />
                         晴 &nbsp;&nbsp;温度：2~5
                     </div>
                 </div>
