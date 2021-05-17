@@ -17,5 +17,5 @@ export const deleteUserInfo = () => {
     localStorage.removeItem('user')
     //从localStorage中删除token
     localStorage.removeItem('token')
-    return {type:DELETE_USER_INFO}
+    return {type: DELETE_USER_INFO}
 }

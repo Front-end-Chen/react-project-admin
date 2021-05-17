@@ -6,7 +6,7 @@ import { Form, Input, Button, Message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { reqLogin } from '../../api';
 import './css/login.less'
-import logo from '../../static/imgs/logo.png'
+import logo from '../../assets/imgs/logo.png'
 
 //2.装饰器写法
 @connect(

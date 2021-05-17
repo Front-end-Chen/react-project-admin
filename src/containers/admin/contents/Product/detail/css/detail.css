@@ -1,0 +1,17 @@
+.prod-item {
+  padding-left: 50px;
+  justify-content: flex-start;
+}
+.prod-item .prod-item-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-right: 15px;
+}
+.prod-item .prod-item-info {
+  font-size: 17px;
+}
+.prod-item img {
+  max-height: 200px;
+  margin-right: 8px;
+}
+/*# sourceMappingURL=./detail.css.map */

@@ -7,5 +7,9 @@
 
 // export const BASE_URL = "http://localhost:3000";
 export const BASE_URL = ""; //等于上面的写法
-//表格每页展示的条数
-export const PAGE_SIZE = 7
+//商品分类列表每页展示的条数
+export const PAGE_SIZE_CATEGORY = 6
+//商品分类列表每页展示的条数
+export const PAGE_SIZE_USER = 6
+//商品管理每页展示的条数
+export const PAGE_SIZE_PRODUCT = 5

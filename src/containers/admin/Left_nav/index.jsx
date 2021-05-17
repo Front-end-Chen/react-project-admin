@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {saveTitle} from '../../../redux/actions/menu'
 import { Menu } from 'antd';
 import './css/left_nav.less'
-import logo from '../../../static/imgs/logo.png'
+import logo from '../../../assets/imgs/logo.png'
 import menuList from '../../../config/menu_config'
 const { SubMenu, Item } = Menu;
 
@@ -48,9 +48,11 @@ class LeftNav extends Component {
                     <h1>商品管理系统</h1>
                 </header>
                 <Menu
-                    // 按路由动态默认选中
-                    // 第一登录需跳转/admin/home
-                    defaultSelectedKeys={pathname.split('/').reverse()[0]}
+                    //1.按路由动态默认选中
+                    //2.第一次登录需跳转/admin/home
+                    //3.此处有小坑：不跳转/admin/home，也可设置selectedKeys解决
+                    //4.防止在跳转到添加、修改和查看商品详情页面后，因刷新页面而造成默认选中的菜单项丢失
+                    defaultSelectedKeys={pathname.indexOf('product') !== -1 ? 'product' : pathname.split('/').reverse()[0]}
                     defaultOpenKeys={pathname.split('/').splice(2)}
                     mode="inline"
                     theme="dark"

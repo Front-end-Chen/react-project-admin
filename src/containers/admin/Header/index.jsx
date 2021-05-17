@@ -70,7 +70,11 @@ class Header extends Component {
     }
 
     getTitle = () => {
-        let pathKey = this.props.location.pathname.split('/').reverse()[0]
+        const {pathname} = this.props.location
+        let pathKey
+        //防止在跳转到添加、修改和查看商品详情页面后，因刷新页面而造成title丢失
+        if (pathname.indexOf('product') !== -1) pathKey='product'
+        else pathKey = pathname.split('/').reverse()[0]
         let title = ''
         menuList.forEach(item => {
             if (item.children && item.children instanceof Array) {
@@ -100,7 +104,7 @@ class Header extends Component {
                 <div className="header-bottom">
                     <div className="header-bottom-left">
                         {/* 此处直接调用方法匹配名称会有性能问题，每次render就会去匹配名称，由于有时间显示一直在调用render导致！ */}
-                        {/* {this.getTitle()} */}
+                        {/* {this.state.title} */}
 
                         {/* 使用redux保存menu的title，解决性能问题 */}
                         {/* {this.props.title} */}
