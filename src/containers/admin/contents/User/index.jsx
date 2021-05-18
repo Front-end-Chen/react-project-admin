@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import dayjs from 'dayjs'
 import { Card, Button, Table, Message, Modal, Form, Input, Select } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { reqUserList, reqAddUser } from '../../../../api'
 import { PAGE_SIZE_USER } from '../../../../config'
+const { Password } = Input
 const { Item } = Form
 const { Option } = Select
 
@@ -117,7 +118,7 @@ export default class User extends Component {
               type='primary'
               onClick={this.showAddUser}
             >
-              <PlusCircleOutlined />创建用户
+              <PlusCircleOutlined />添加用户
           </Button>
           }
         >
@@ -156,10 +157,15 @@ export default class User extends Component {
               label="密码"
               name="password"
               rules={[
-                { required: true, message: '密码必须输入！' }
+                { required: true, message: '密码必须输入！' },
+                { max: 12, message: '密码必须小于等于12位！' },
+                { min: 4, message: '密码必须大于等于4位！' }
               ]}
             >
-              <Input placeholder="请输入密码" />
+              <Password
+                placeholder="请输入密码"
+                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              />
             </Item>
             <Item
               label="手机号"

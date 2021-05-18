@@ -1,15 +1,17 @@
 .admin {
-  height: 140%;
+  height: 100%;
 }
 .admin .sider {
   color: white;
 }
 .admin .content {
   height: 100%;
+  overflow: auto;
   margin: 30px 20px 0px 20px;
   background-color: #fff;
 }
 .admin .footer {
+  line-height: 5px;
   text-align: center;
 }
 /*# sourceMappingURL=./admin.css.map */

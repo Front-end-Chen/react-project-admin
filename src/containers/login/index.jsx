@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { saveUserInfo } from '../../redux/actions/login.js'
 import { Form, Input, Button, Message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { reqLogin } from '../../api';
 import './css/login.less'
 import logo from '../../assets/imgs/logo.png'
+const { Password } = Input
 
 //2.装饰器写法
 @connect(
@@ -113,10 +114,10 @@ class Login extends Component {
                             rules={[
                                 { validator: this.pwdValidator },
                             ]}>
-                            <Input
+                            <Password
                                 // prefix={<AlipayOutlined className="site-form-item-icon" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                 prefix={<LockOutlined className="site-form-item-icon" />}
-                                type="password"
+                                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                 placeholder="密码"
                             />
                         </Form.Item>

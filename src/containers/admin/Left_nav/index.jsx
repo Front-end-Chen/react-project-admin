@@ -9,11 +9,15 @@ import menuList from '../../../config/menu_config'
 const { SubMenu, Item } = Menu;
 
 @connect(
-    state => ({}),
+    state => ({
+        menus: state.userInfo.user.role.menus,
+        username: state.userInfo.user.username
+    }), //当前用户的权限
     {saveTitle}
 )
 @withRouter
 class LeftNav extends Component {
+
     /* 注意:
         1.Link放在Item里面，不然css样式失效
         2.菜单得动态生成，不能写死，便于权限管理
@@ -21,22 +25,39 @@ class LeftNav extends Component {
     //用于创建菜单的函数
     createMenu = (target) => {
         return target.map((item) => {
-            if(!item.children){
-                return (
-                    <Item key={item.key} icon={item.icon} onClick={() => {this.props.saveTitle(item.title)}}>
-                        <Link to={item.path}>
-                            <span>{item.title}</span>
-                        </Link>
-                    </Item>
-                )
-            }else{
-                return (
-                    <SubMenu key={item.key} icon={item.icon} title={item.title}>
-                        {this.createMenu(item.children)}
-                    </SubMenu>
-                )
+            //判断用户是否有权限查看菜单
+            if (this.hasAuth(item.key)) {
+                if(!item.children){
+                    return (
+                        <Item key={item.key} icon={item.icon} onClick={() => {this.props.saveTitle(item.title)}}>
+                            <Link to={item.path}>
+                                <span>{item.title}</span>
+                            </Link>
+                        </Item>
+                    )
+                }else{
+                    return (
+                        <SubMenu key={item.key} icon={item.icon} title={item.title}>
+                            {this.createMenu(item.children)}
+                        </SubMenu>
+                    )
+                }
+            } else {
+                return "" //去除警告，map回调函数里必须返回一个值
             }
         })
+    }
+
+    //权限校验
+    hasAuth = (key) => {
+        const { menus, username } = this.props
+        if(username === "admin") return true
+        //some查找数组中是否有满足条件的元素，返回布尔值，查找到第一个满足条件的元素就终止循环
+        let isHasKey = menus.some((menu) => {
+            return menu === key
+        })
+        if(isHasKey) return true
+        else return false
     }
 
     render() {

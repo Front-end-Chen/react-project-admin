@@ -5,6 +5,7 @@ import { Card, Button, Table, Message, Modal, Form, Input, Tree } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { reqRoleList, reqAddRole, reqAuthRole } from '../../../../api'
 import menuList from '../../../../config/menu_config'
+import { PAGE_SIZE_ROLE } from '../../../../config'
 const { Item } = Form
 
 @connect(
@@ -21,7 +22,8 @@ class Role extends Component {
     isShowAdd: false,
     isShowAuth: false,
     checkedKeys: [], //选中的菜单
-    _id: '' //当前操作的角色id
+    _id: '', //当前操作的角色id
+    role_name: '' //角色名用于显示当前给哪个角色设置权限
   }
 
   getRoleList = async () => {
@@ -92,7 +94,7 @@ class Role extends Component {
     //设置默认选中的菜单
     if (result) this.setState({ checkedKeys: result.menus })
     //保存_id以便设置（更新）权限
-    this.setState({ isShowAuth: true, _id: id })
+    this.setState({ isShowAuth: true, _id: id, role_name: result.name})
   }
 
   //用于展示新增弹窗
@@ -131,6 +133,7 @@ class Role extends Component {
       {
         title: '操作',
         key: 'option',
+        //传id保存下来，便于数据回显与更新权限
         render: (item) => <Button type='link' onClick={() => { this.showAuth(item._id) }}>设置权限</Button>
       }
     ];
@@ -158,7 +161,7 @@ class Role extends Component {
             dataSource={dataSource}
             columns={columns}
             bordered
-            pagination={{ defaultPageSize: 5 }}
+            pagination={{ defaultPageSize: PAGE_SIZE_ROLE }}
             rowKey="_id"
           />
         </Card>
@@ -195,6 +198,8 @@ class Role extends Component {
           okText="确认"
           cancelText="取消"
         >
+          <span style={{fontSize: '16px'}}>角色名称：{this.state.role_name}</span>
+          <br/><br/>
           <Tree
             checkable //允许选中
             onCheck={this.onCheck}

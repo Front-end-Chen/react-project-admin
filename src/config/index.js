@@ -9,7 +9,9 @@
 export const BASE_URL = ""; //等于上面的写法
 //商品分类列表每页展示的条数
 export const PAGE_SIZE_CATEGORY = 6
-//商品分类列表每页展示的条数
+//用户列表每页展示的条数
 export const PAGE_SIZE_USER = 6
+//角色列表每页展示的条数
+export const PAGE_SIZE_ROLE = 6
 //商品管理每页展示的条数
 export const PAGE_SIZE_PRODUCT = 5
