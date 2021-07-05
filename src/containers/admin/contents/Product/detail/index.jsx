@@ -53,7 +53,7 @@ class Detail extends Component {
             if (result) {
                 // const { categoryId, desc, detail, imgs, name, price } = result
                 // this.setState({ categoryId, desc, detail, imgs, name, price })
-                //保存到实例自身
+                //setState是异步的，保存categoryId到实例自身
                 this.categoryId = result.categoryId
                 this.setState({...result})
             }
@@ -106,7 +106,7 @@ class Detail extends Component {
     // }
 
     render() {
-        const { categoryName, desc, detail, imgs, name, price } = this.state
+        const { categoryName, desc, detail, imgs, name, price, isLoading } = this.state
         const title = (
             <>
                 <Button
@@ -123,7 +123,7 @@ class Detail extends Component {
         return (
             <>
                 <Card
-                    loading={this.state.isLoading}
+                    loading={isLoading}
                     title={title}
                 >
                     <List>

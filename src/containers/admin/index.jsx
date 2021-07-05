@@ -56,7 +56,7 @@ class Admin extends Component {
                             </Switch>
                         </Content>
                         <Footer className="footer">
-                            推荐使用谷歌浏览器，获取最佳用户体验
+                            Make By 前端小辰
                         </Footer>
                     </Layout>
                 </Layout>

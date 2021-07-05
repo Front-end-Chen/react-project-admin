@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# 商品后台管理系统
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1.项目描述
 
-## Available Scripts
+使用React进行商品后台管理SPA页面开发，UI库采用AntD以及Echarts。采用模块化、组件化、工程化的模式开发
 
-In the project directory, you can run:
+## 2.技术栈
 
-### `yarn start`
+- 前端：React全家桶（react，react-router，redux，react-redux）+ Antd + Axios + ES6+ + Webpack + Echarts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- 工具库：react-draft-wysiwyg，draft-js，dayjs，nprogress，screenfull
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 3.实现的功能
 
-### `yarn test`
+- 用户登录
+  - 身份认证JWT
+  - 登录状态维持
+  
+- 左侧导航栏切换
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 商品分类管理
+  - 商品分类信息分页-前端分页（假分页）
+  - 商品分类信息的增改与数据回显
+  
+- 商品管理
+  - 商品信息分页-后端分页（真分页）
+  - 商品信息的增改查与数据回显
+  - 商品上架与下架
+  - 商品图片上传
+  - 商品详情富文本编辑
+  - 按商品名称和商品描述搜索商品
+  
+- 权限管理
 
-### `yarn build`
+  - 添加角色，设置权限
+  - 角色权限数据回显
+  - 根据角色权限显示对应的导航栏选项
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 用户管理
+  - 用户信息的增改与数据回显
+  - 修改用户的角色
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 4.项目难点及解决
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 为了实现登录状态维持，首先查阅了用户身份认证的方法，然后在理解了几种方法后，开始尝试编写代码，随后与后端同学讨论，选择了较安全的token验证，于是去了解发请求如何携带token，最终实现了功能，达到预期效果。
+- 为了实现选中左侧菜单，header区域中小标题显示当前菜单名称。想了几种方法：点击存到redux中再获取，存到context再获取，根据最后一级路由的URI来匹配菜单名获取。再比较几种方法后，最终选择根据路由URI获取，性能最好，代码也最简洁。
+- 在实现修改分类信息和商品信息弹窗后的数据回显时，设置表单默认值会出现获取不到节点的错误，在经过大量调试后依然无果，于是与其他同学讨论，并阅读一些文章后，发现是setState的异步导致的问题，再次调试代码，总结经验，最后解决了数据回显的问题。
 
-### `yarn eject`
+## 5.项目收获
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- 引入redux进行数据管理，对redux的使用和基本原理有了一定的了解。
+- 使用React结合AntD进行页面开发，熟悉了UI库的使用方式。
+- 在开发商品管理的分页列表时，理解了真分页与假分页的区别和使用场景。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

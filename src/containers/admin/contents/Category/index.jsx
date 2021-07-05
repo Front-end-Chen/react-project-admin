@@ -72,7 +72,7 @@ class Category extends Component {
     //用于展示弹窗--作为修改
     showUpdate = (item) => {
         const { _id, name } = item //获取当前要修改分类的id、name
-        console.log(item);
+        // console.log(item);
         this.setState({
             modalCurrentId: _id, //当前操作的id
             operateType: 'update', //操作方式变为更新

@@ -45,7 +45,7 @@ class Login extends Component {
 
     //点击登录按钮的失败的回调
     onFinishFailed = ({ values, errorFields, outOfDate }) => {
-        Message.error('表单输入有误，请检查！',2)
+        Message.error('表单输入有误，请检查！', 2)
     };
 
     //自定义校验，即：自己写判断 -> 密码的验证器---每当在密码输入框输入东西后，都会调用此函数去验证输入是否合法。
@@ -107,6 +107,7 @@ class Login extends Component {
                                 // prefix={<ZhihuOutlined className="site-form-item-icon" style={{ color: 'rgba(0,0,0,.25)'}}/>}
                                 prefix={<UserOutlined className="site-form-item-icon" />}
                                 placeholder="用户名"
+                                allowClear
                             />
                         </Form.Item>
                         <Form.Item

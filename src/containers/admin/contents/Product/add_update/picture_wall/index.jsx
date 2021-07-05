@@ -62,7 +62,7 @@ export default class PicturesWall extends Component {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
         }
-
+        //设置当前预览图片的信息
         this.setState({
             previewImage: file.url || file.preview,
             previewVisible: true,
@@ -72,9 +72,9 @@ export default class PicturesWall extends Component {
 
     //当图片状态发生改变的回调
     handleChange = async ({ file, fileList }) => {
-        //若文件上传成功
+        //若文件上传成功，此处真显示图片
         if (file.status === 'done') {
-            console.log(file.response.data.url);
+            // console.log(file.response.data.url);
             fileList[fileList.length - 1].url = file.response.data.url
             fileList[fileList.length - 1].name = file.response.data.name
         }
@@ -102,7 +102,7 @@ export default class PicturesWall extends Component {
                 <Upload
                     action={`${BASE_URL}/manage/img/upload`} //发送上传请求的地址
                     method="post" //默认post
-                    name="image"
+                    name="image" //上传图片发请求携带的参数名（图片名）
                     listType="picture-card" //照片墙的展示方式
                     fileList={fileList} //图片列表，一个数组里面包含着多个图片对象{uid:xxxx,name:xxx,status:xxx,url:xxx}
                     onPreview={this.handlePreview} //点击预览按钮的回调

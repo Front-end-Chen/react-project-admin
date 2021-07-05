@@ -9,18 +9,21 @@ export default class RichTextEditor extends Component {
   state = {
     editorState: EditorState.createEmpty(), //构建一个初始化状态的编辑器+内容
   }
-
+  
+  //编辑器改变回调
   onEditorStateChange = (editorState) => {
     this.setState({
       editorState
     });
   };
 
+  //获取富文本原始信息（包含HTML），富文本转为HTML
   getRichText = () => {
     const { editorState } = this.state
     return draftToHtml(convertToRaw(editorState.getCurrentContent()))
   }
 
+  //获取富文本信息，HTML转为富文本
   setRichText = (html) => {
     const contentBlock = htmlToDraft(html);
     if (contentBlock) {

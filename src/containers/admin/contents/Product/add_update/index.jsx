@@ -146,7 +146,7 @@ class AddUpdate extends Component {
                         labelCol={{ lg: 2 }}
                     >
                         <Item
-                            label="商品名称"
+                            label="商品名称" //input前面的label
                             name="name"
                             wrapperCol={{ offset: 1, lg: 8 }}
                             rules={[{ required: true, message: '请输入商品名称！' }]}

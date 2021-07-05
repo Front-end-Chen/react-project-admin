@@ -29,7 +29,7 @@ class Role extends Component {
   getRoleList = async () => {
     let result = await reqRoleList()
     const { status, data } = result
-    if (status === 0) this.setState({ roleList: data })
+    if (status === 0) this.setState({ roleList: data.reverse() })
     else Message.error("获取角色列表失败！", 2)
   }
 
